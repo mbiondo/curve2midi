@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>MIDI Generation Example</title>
+		<!-- Shadcn UI (Radix Colors + Tailwind CDN for quick dark mode) -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/blackA.css" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/slateDark.css" />
+		<script src="https://cdn.tailwindcss.com"></script>
+		<style>
+			html,
+			body {
+				background: #18181b;
+				color: #f1f5f9;
+				font-family: "Inter", Arial, sans-serif;
+				min-height: 100vh;
+			}
+			main {
+				max-width: 900px;
+				margin: 0 auto;
+				padding: 2.5rem 1.5rem 3rem 1.5rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			.card {
+				background: #23272f;
+				border-radius: 16px;
+				box-shadow: 0 4px 32px #000a;
+				padding: 2rem 2.5rem;
+				margin-bottom: 2.5rem;
+				width: 100%;
+				max-width: 700px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+			#main-svg {
+				width: 100%;
+				max-width: 700px;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow-x: auto;
+			}
+			#main-svg svg {
+				background: #23272f;
+				border-radius: 12px;
+				border: 2px solid #334155;
+				box-shadow: 0 4px 16px #000a;
+				display: block;
+			}
+			#svgs {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 18px;
+				margin-bottom: 2em;
+			}
+			#svgs svg {
+				background: #23272f;
+				border-radius: 10px;
+				border: 1.5px solid #334155;
+				box-shadow: 0 2px 8px #000a;
+				padding: 6px;
+				width: 64px;
+				height: 80px;
+				transition: transform 0.15s;
+			}
+			#svgs svg:hover {
+				transform: scale(1.08) translateY(-4px);
+				border-color: #60a5fa;
+				box-shadow: 0 4px 16px #60a5fa33;
+			}
+			#player audio {
+				width: 100%;
+				max-width: 400px;
+				margin-top: 0.5em;
+				background: #18181b;
+			}
+			::-webkit-scrollbar {
+				width: 8px;
+				background: #23272f;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #334155;
+				border-radius: 8px;
+			}
+			.cta-link {
+				color: #60a5fa;
+				text-decoration: underline;
+				transition: color 0.15s;
+			}
+			.cta-link:hover {
+				color: #38bdf8;
+			}
+			@media (max-width: 700px) {
+				.card {
+					padding: 1.2rem 0.5rem;
+				}
+				main {
+					padding: 1.2rem 0.5rem 2rem 0.5rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<h1 class="text-4xl font-bold mb-4 text-center">MIDI Generation Example</h1>
+			<p class="mb-8 text-slate-300 text-center max-w-2xl">
+				This page loads <code>dummy/example.json</code> and displays the SVGs for each segment.<br />
+				You can also play the generated MIDI file (<code>dummy/melody/wave-melody.mid</code>).
+			</p>
+			<div class="card" id="player">
+				<h2 class="text-xl font-semibold mb-2 text-center">Play Example MIDI</h2>
+				<audio id="midi-audio" controls>
+					<source src="dummy/wave-melody.mid" type="audio/midi" />
+					Your browser does not support MIDI playback. <a href="dummy/wave-melody.mid">Download MIDI</a>
+				</audio>
+			</div>
+			<div class="card">
+				<h2 class="text-xl font-semibold mb-4 text-center">Full Curve SVG</h2>
+				<div id="main-svg"></div>
+			</div>
+			<div class="card">
+				<h2 class="text-xl font-semibold mb-4 text-center">All Segment SVGs</h2>
+				<div id="svgs"></div>
+			</div>
+			<p class="mt-8 text-center">
+				See the JSON table view here:
+				<a href="/json-table" class="cta-link">JSON Table View</a>
+			</p>
+		</main>
+		<script>
+			fetch("dummy/example.json")
+				.then((res) => res.json())
+				.then((data) => {
+					// Show main SVG
+					if (data.svg) {
+						const mainSvgDiv = document.getElementById("main-svg")
+						const div = document.createElement("div")
+						div.innerHTML = data.svg
+						const svg = div.firstChild
+
+						mainSvgDiv.appendChild(svg)
+					}
+					// Show all segment SVGs
+					const svgsDiv = document.getElementById("svgs")
+					if (Array.isArray(data.segments)) {
+						data.segments.forEach((seg) => {
+							if (seg.svg) {
+								const div = document.createElement("div")
+								div.innerHTML = seg.svg
+								svgsDiv.appendChild(div.firstChild)
+							}
+						})
+					}
+				})
+		</script>
+	</body>
+</html>

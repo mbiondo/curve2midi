@@ -99,6 +99,19 @@ app.use(express.json({ limit: "2mb" }))
 // Register the MIDI generation endpoint
 app.post("/generate-midi", generateMidiHandler)
 
+// Serve static files from dummy and dummy/melody for the example
+app.use("/dummy", express.static(path.join(__dirname, "../dummy")))
+
+// Serve the static example page at /
+app.get("/", (req: Request, res: Response) => {
+	res.sendFile(path.join(__dirname, "../dummy/index.html"))
+})
+
+// Serve the JSON table view page at /json-table
+app.get("/json-table", (req: Request, res: Response) => {
+	res.sendFile(path.join(__dirname, "../dummy/json-table.html"))
+})
+
 // 404 handler for all other routes
 app.use((req: Request, res: Response) => {
 	res.status(404).json({ error: "Not found" })
