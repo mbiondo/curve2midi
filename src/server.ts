@@ -99,17 +99,17 @@ app.use(express.json({ limit: "2mb" }))
 // Register the MIDI generation endpoint
 app.post("/generate-midi", generateMidiHandler)
 
-// Serve static files from dummy and dummy/melody for the example
-app.use("/dummy", express.static(path.join(__dirname, "../dummy")))
+// Serve static files from static and static/melody for the example
+app.use("/static", express.static(path.join(__dirname, "../static")))
 
 // Serve the static example page at /
 app.get("/", (req: Request, res: Response) => {
-	res.sendFile(path.join(__dirname, "../dummy/index.html"))
+	res.sendFile(path.join(__dirname, "../static/index.html"))
 })
 
 // Serve the JSON table view page at /json-table
 app.get("/json-table", (req: Request, res: Response) => {
-	res.sendFile(path.join(__dirname, "../dummy/json-table.html"))
+	res.sendFile(path.join(__dirname, "../static/json-table.html"))
 })
 
 // 404 handler for all other routes
@@ -123,6 +123,7 @@ app.listen(PORT, () => {
 })
 
 /**
- * Export the Express app instance for testing purposes.
+ * Export the Express app instance for Vercel (and testing purposes)
  */
+export default app
 export { app }

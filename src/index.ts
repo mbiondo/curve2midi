@@ -1,7 +1,7 @@
 import { generateMelody, LandscapeData, GeneratedMelody } from "./lib/generateMelody"
 import { generateMidiFromMelody } from "./lib/generateMidi"
 
-import landscapeData from "../dummy/example.json"
+import landscapeData from "../static/example.json"
 
 const melodyOptions = {
 	minPitch: 60,

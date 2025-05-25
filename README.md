@@ -53,8 +53,8 @@ Generates a melody based on the provided landscape data and returns a MIDI file.
 
 ## Example Data and Output
 
-- The file [`dummy/example.json`](dummy/example.json) contains a complete example of the input body.
-- The file [`dummy/wave-melody.mid`](dummy/wave-melody.mid) contains the MIDI file generated from `example.json` using the following melody options:
+- The file [`static/example.json`](static/example.json) contains a complete example of the input body.
+- The file [`static/wave-melody.mid`](static/wave-melody.mid) contains the MIDI file generated from `example.json` using the following melody options:
   ```typescript
   const melodyOptions = {
       minPitch: 60,
@@ -66,6 +66,24 @@ Generates a melody based on the provided landscape data and returns a MIDI file.
   }
   ```
 - These parameters may soon be configurable as request parameters.
+- The image used in the example is [`static/image.png`](static/image.png).
+
+## Project Structure
+
+```
+src/
+  server.ts         # Main Express server
+  server.test.ts    # Automated tests (Jest + Supertest)
+  lib/
+    generateMelody.ts
+    generateMidi.ts
+output/             # Temporary directory for generated MIDI files
+static/
+  example.json      # Example input for POST /generate-midi
+  wave-melody.mid   # Example output MIDI generated from example.json
+  image.png         # Example landscape image
+  logo.png          # Logo for the UI
+```
 
 ## Usage
 
@@ -86,24 +104,9 @@ Generates a melody based on the provided landscape data and returns a MIDI file.
 3. **Send a POST request to generate a MIDI file:**
    - URL: `http://localhost:3000/generate-midi`
    - Content-Type: `application/json`
-   - Body: See example above or use [`dummy/example.json`](dummy/example.json).
+   - Body: See example above or use [`static/example.json`](static/example.json).
 
 4. **Download the generated MIDI file** from the response.
-
-## Project Structure
-
-```
-src/
-  server.ts         # Main Express server
-  server.test.ts    # Automated tests (Jest + Supertest)
-  lib/
-    generateMelody.ts
-    generateMidi.ts
-output/             # Temporary directory for generated MIDI files
-dummy/
-  example.json      # Example input for POST /generate-midi
-  wave-melody.mid   # Example output MIDI generated from 
-```
 
 ## Testing
 

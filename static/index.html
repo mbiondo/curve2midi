@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/blackA.css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@radix-ui/colors@latest/slateDark.css" />
 		<script src="https://cdn.tailwindcss.com"></script>
+
 		<style>
 			html,
 			body {
@@ -105,18 +106,83 @@
 		</style>
 	</head>
 	<body>
-		<main>
+		<!-- Toolbar -->
+		<div
+			class="w-full flex justify-center fixed top-0 left-0 z-50 bg-[#23272f] border-b border-[#334155] shadow-sm"
+			style="min-height: 56px"
+		>
+			<nav class="flex items-center justify-between w-full max-w-[700px] px-6 py-3">
+				<img
+					src="static/logo.png"
+					alt="curve2midi logo"
+					style="height: 40px; width: auto; filter: brightness(0) invert(1) drop-shadow(0 0 2px #38bdf8)"
+				/>
+				<a
+					href="https://github.com/mbiondo/curve2midi"
+					target="_blank"
+					rel="noopener"
+					class="flex items-center gap-2 text-blue-400 hover:text-blue-300 font-medium transition"
+				>
+					<svg width="20" height="20" fill="currentColor" class="inline-block" viewBox="0 0 24 24">
+						<path
+							d="M12 .5C5.73.5.5 5.74.5 12.02c0 5.1 3.29 9.43 7.86 10.96.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.71-1.3-1.71-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.27 3.4.97.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 2.92-.39c.99 0 1.99.13 2.92.39 2.22-1.49 3.2-1.18 3.2-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.41-5.27 5.7.42.36.79 1.09.79 2.2 0 1.59-.01 2.87-.01 3.26 0 .31.21.67.8.56C20.71 21.45 24 17.12 24 12.02 24 5.74 18.27.5 12 .5z"
+						/>
+					</svg>
+				</a>
+			</nav>
+		</div>
+		<main style="padding-top: 72px">
 			<h1 class="text-4xl font-bold mb-4 text-center">MIDI Generation Example</h1>
 			<p class="mb-8 text-slate-300 text-center max-w-2xl">
-				This page loads <code>dummy/example.json</code> and displays the SVGs for each segment.<br />
-				You can also play the generated MIDI file (<code>dummy/melody/wave-melody.mid</code>).
+				This page loads <code>static/example.json</code> and displays the SVGs for each segment.<br />
+				You can also play the generated MIDI file (<code>static/melody/wave-melody.mid</code>).
 			</p>
 			<div class="card" id="player">
-				<h2 class="text-xl font-semibold mb-2 text-center">Play Example MIDI</h2>
-				<audio id="midi-audio" controls>
-					<source src="dummy/wave-melody.mid" type="audio/midi" />
-					Your browser does not support MIDI playback. <a href="dummy/wave-melody.mid">Download MIDI</a>
+				<h2 class="text-xl font-semibold mb-2 text-center">Play Example Audio</h2>
+				<audio controls>
+					<source src="static/wave-melody.mp3" type="audio/mpeg" />
+					<source src="static/wave-melody.mid" type="audio/midi" />
+					Tu navegador no soporta reproducción de audio. <a href="static/wave-melody.mp3">Descargar</a>.
 				</audio>
+			</div>
+			<div class="card mb-8">
+				<h2 class="text-xl font-semibold mb-4 text-center">Melody Options Used</h2>
+				<div class="flex flex-wrap justify-center gap-2 mb-4">
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>minPitch: 60</span
+					>
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>maxPitch: 72</span
+					>
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>baseDuration: 0.16</span
+					>
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>targetNotesPerDomainUnit: 50</span
+					>
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>tempoBPM: 120</span
+					>
+					<span
+						class="inline-block bg-blue-900/60 text-blue-200 px-3 py-1 rounded-full text-xs font-semibold shadow"
+						>velocityScale: 3</span
+					>
+				</div>
+				<img
+					src="static/image.png"
+					alt="Landscape Image"
+					style="
+						max-width: 100%;
+						border-radius: 12px;
+						border: 1.5px solid #334155;
+						box-shadow: 0 2px 8px #000a;
+					"
+				/>
 			</div>
 			<div class="card">
 				<h2 class="text-xl font-semibold mb-4 text-center">Full Curve SVG</h2>
@@ -131,8 +197,15 @@
 				<a href="/json-table" class="cta-link">JSON Table View</a>
 			</p>
 		</main>
+		<footer class="w-full text-center py-4 mt-8 text-xs text-slate-500 bg-[#23272f] border-t border-[#334155]">
+			&copy; 2025
+			<a href="https://github.com/mbiondo/curve2midi" class="underline hover:text-blue-400">curve2midi</a>
+			&mdash; Powered by
+			<a href="https://github.com/mbiondo/wave-generator" class="underline hover:text-blue-400">wave-generator</a>
+		</footer>
+
 		<script>
-			fetch("dummy/example.json")
+			fetch("static/example.json")
 				.then((res) => res.json())
 				.then((data) => {
 					// Show main SVG
